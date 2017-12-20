@@ -5,8 +5,7 @@ const express = require('express'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     index = require('./routes/index'),
-    mongoose = require('mongoose'),
-    authRoutes = require('./routes/auth-routes'),
+    mongoose = require('mongoose')
 
 
 require('dotenv').config();
