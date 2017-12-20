@@ -1,19 +1,23 @@
 const request = require('request');
+require("dotenv").config();
 
 module.exports = function fetchStock(company){
-	if(typeof company === 'Array'){
-		var p = company.map((stock, i) => {
-			getStockData(stock[i])
-		}
-		return p 
+	if(Array.isArray(company)){
+        
+		var p = company.map((stock) => {
+            return getStockData(stock)
+        })
+        return p
 	} else {
+        
 		return getStockData(company)
 	}
 }
 
 function getStockData(company) {
-	var stockData = [];
-	request(url + company, (err, response, body) => {
+    var stockData = [];
+    return new Promise((resolve, reject) => {
+	request('https://www.quandl.com/api/v3/datasets/WIKI/' + company + '.json?start_date=2017-01-01&api_key='+ process.env.API_KEY, (err, response, body) => {
 		if(err) reject(err);
 		let dataObj = JSON.parse(body);
 		if(dataObj.quandl_error){
@@ -27,10 +31,12 @@ function getStockData(company) {
 					y: data[1]
 				});
 			if(stockData.length === lengthOfData) {
-				stockData.push(name)
+                stockData.push(name)
+                
 				resolve(stockData)
 			}
 		});
 		}
-	});
+    });
 });
+};
