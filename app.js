@@ -5,26 +5,13 @@ const express = require('express'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     index = require('./routes/index'),
-    passport = require('passport'),
     mongoose = require('mongoose'),
-    session = require('express-session'),
     authRoutes = require('./routes/auth-routes'),
-    passportSetup = require('./config/passport-setup');
+
 
 require('dotenv').config();
 
 const app = express();
-
-//set up session
-app.use(session({
-	secret: 'secretClementine',
-	resave: false,
-	saveUninitialized: true
-}));
-
-// initialize passport
-app.use(passport.initialize());
-app.use(passport.session());
 
 //set up database
 var mongoDB = process.env.DB_URL;
