@@ -1,15 +1,18 @@
 const express = require("express"),
   path = require("path"),
+  app = express(),
   favicon = require("serve-favicon"),
   logger = require("morgan"),
   cookieParser = require("cookie-parser"),
   bodyParser = require("body-parser"),
   index = require("./routes/index"),
+  server = require("http").createServer(app);
+  io = require("socket.io").listen(server),
+  Stock = require("./models/stocks.js"),
   mongoose = require("mongoose");
 
 require("dotenv").config();
 
-const app = express();
 //set up database
 var mongoDB = process.env.DB_URL;
 mongoose.connect(mongoDB, {
@@ -19,6 +22,15 @@ mongoose.connect(mongoDB, {
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB Connection Error"));
+
+// set up socket io server side
+
+io.on("connection", socket => {
+  console.log("Client Connected");
+  socket.on("disconnect", socket => {
+    console.log("Client disconnected");
+  });
+});
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
