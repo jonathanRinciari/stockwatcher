@@ -15,8 +15,4 @@ router.get("/", () => {
   });
 });
 
-function fetchStock(arr){
-  console.log(arr)
-}
-
 module.exports = router;
