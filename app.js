@@ -8,6 +8,7 @@ const express = require("express"),
   index = require("./routes/index"),
   io = require("socket.io")()
   Stock = require("./models/stocks.js"),
+  fetchStocks = require('./public/scripts/fetchStocks.js')
   mongoose = require("mongoose");
 
 require("dotenv").config();
@@ -35,7 +36,7 @@ io.on("connection", socket => {
 
 
   socket.on('addStock', (company) => {
-	fetchStock(company).then((stockData) => {
+	fetchStocks(company).then((stockData) => {
 		Stock.findOne({symbol: company}, (err, stock) => {
 			if(err) throw err;
 			if(!stock){

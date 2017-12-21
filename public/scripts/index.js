@@ -18,27 +18,27 @@ $(document).ready(function() {
     });
   }
 
-//   var socket = io.connect("http://localhost");
+  var socket = io.connect();
 
-// $('button').click(function(){
-//     var stockSymb = $('input').val();
-//     if(stockSymb !== ''){
-// 	socket.emit('addStock', stockSymb);
-//     $('input').val('');
-//     }
-// });
+$('button').click(function(){
+    var stockSymb = $('input').val();
+    if(stockSymb !== ''){
+	socket.emit('addStock', stockSymb);
+    $('input').val('');
+    }
+});
 
-// socket.on('stockAdded', (stockData) => {
-// 	addStock(stockData);
-// });
+socket.on('stockAdded', (stockData) => {
+	addStock(stockData);
+});
 
-// socket.on('stockRemoved', (tockData) => {
-// 	removeStock(stockData)
-// });
+socket.on('stockRemoved', (tockData) => {
+	removeStock(stockData)
+});
 
-// socket.on('invalidStock', (message) => {
-// 	alert(message)
-// })
+socket.on('invalidStock', (message) => {
+	alert(message)
+})
 
 
 
