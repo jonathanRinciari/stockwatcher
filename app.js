@@ -6,13 +6,12 @@ const express = require("express"),
   cookieParser = require("cookie-parser"),
   bodyParser = require("body-parser"),
   index = require("./routes/index"),
-  server = require("http").createServer(app);
-  io = require("socket.io").listen(server),
+  io = require("socket.io")()
   Stock = require("./models/stocks.js"),
   mongoose = require("mongoose");
 
 require("dotenv").config();
-
+app.io = io;
 //set up database
 var mongoDB = process.env.DB_URL;
 mongoose.connect(mongoDB, {
@@ -30,6 +29,32 @@ io.on("connection", socket => {
   socket.on("disconnect", socket => {
     console.log("Client disconnected");
   });
+
+
+
+
+
+  socket.on('addStock', (company) => {
+	fetchStock(company).then((stockData) => {
+		Stock.findOne({symbol: company}, (err, stock) => {
+			if(err) throw err;
+			if(!stock){
+				if(Array.isArray(stockData)) {
+					let newStock = new Stock({
+						name: stockData[stockData.length - 1],
+						symbol: company
+					}).save((err, data) => {
+						if(err) throw err;
+						console.log('stock added', data.symbol)
+						io.sockets.emit('stockAdded', stockData)
+					})
+				}
+			} else {
+				console.log('This stock Exists')
+			}
+		})
+	})
+})
 });
 
 // view engine setup

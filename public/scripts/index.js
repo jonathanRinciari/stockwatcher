@@ -18,6 +18,33 @@ $(document).ready(function() {
     });
   }
 
+//   var socket = io.connect("http://localhost");
+
+// $('button').click(function(){
+//     var stockSymb = $('input').val();
+//     if(stockSymb !== ''){
+// 	socket.emit('addStock', stockSymb);
+//     $('input').val('');
+//     }
+// });
+
+// socket.on('stockAdded', (stockData) => {
+// 	addStock(stockData);
+// });
+
+// socket.on('stockRemoved', (tockData) => {
+// 	removeStock(stockData)
+// });
+
+// socket.on('invalidStock', (message) => {
+// 	alert(message)
+// })
+
+
+
+
+
+
   function addStock(stock) {
     let xAxisArr = [];
     let yAxisArr = [];
@@ -44,7 +71,6 @@ $(document).ready(function() {
       pointBorderColor: "black",
       pointHoverRadius: 2
     };
-    console.log(stockChart);
     stockChart.data.datasets.push(newChart);
     stockChart.update();
   }

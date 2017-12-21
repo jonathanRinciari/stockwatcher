@@ -5,7 +5,7 @@ var Stock = require("../models/stocks.js");
 
 /* GET home page. */
 router.get("/", (req, res) => {
-  var stocksArr = ['googl'];
+  var stocksArr = ['googl', 'FB'];
   Stock.find({}, stocks => {
     if (stocks) {
       stocksArr.push(stocks.symbol);
