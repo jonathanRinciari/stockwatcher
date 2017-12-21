@@ -5,20 +5,21 @@ var Stock = require("../models/stocks.js");
 
 /* GET home page. */
 router.get("/", (req, res) => {
-  var stocksArr = ['googl'];
+  var stocksArr = [];
   Stock.find({}, stocks => {
     if (stocks) {
       stocksArr.push(stocks.symbol);
     } else {
-      res.render('index', {title: 'Help'})
+      res.render('index', {title: 'Helps'})
     }
   });
   if(stocksArr.length > 0){
   var stockData = fetchStocks(stocksArr);
   Promise.all(stockData).then(data => {
-    console.log(data, "test");
     res.locals.currentStocks = data;
-    res.send(data);
+    console.log(data[0][data[0].length - 1]);
+    res.render('index', {'title': 'Help'})
+    
   });
 }
 });
