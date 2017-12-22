@@ -7,7 +7,7 @@ $(document).ready(function() {
       datasets: []
     },
     options: {
-      maintainAspectRatio: true,
+      maintainAspectRatio: false,
       responsive: true
     }
   });
