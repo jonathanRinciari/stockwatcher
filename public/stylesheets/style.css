@@ -14,19 +14,23 @@ a {
 .appContainer {
  display: flex;
  flex-direction: row;
+ justify-content: space-around;
 }
 
 .mainContainer {
   display: flex;
   flex-direction: column;
-  width: 60%;
 }
 
+#stockChart {
+  height: 72vh;
+  width: 72vw;
+
+}
 
 #stockCardContainer {
   display: flex;
   flex-direction: column;
-  width: 20%
 }
 
 .stockCard {
@@ -35,8 +39,6 @@ a {
   justify-content: space-around;
   text-align: center;
   font-size: 18px;
-  width: 90%;
-  height: 12%;
   margin: 1em;
   border: 1px solid red;
   background-color: teal;
