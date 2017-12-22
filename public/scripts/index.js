@@ -23,6 +23,8 @@ $(document).ready(function() {
 $('button').click(function(){
     var stockSymb = $('input').val();
     if(stockSymb !== ''){
+    stockSymb = stockSymb.toUpperCase();
+    console.log(stockSymb)
 	socket.emit('addStock', stockSymb);
     $('input').val('');
     }
@@ -39,10 +41,6 @@ socket.on('stockRemoved', (tockData) => {
 socket.on('invalidStock', (message) => {
 	alert(message)
 })
-
-
-
-
 
 
   function addStock(stock) {

@@ -1,8 +1,54 @@
+body,html {
+  margin: 0;
+  height: 100%;
+}
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
+}
+
+
+.appContainer {
+ display: flex;
+ flex-direction: row;
+}
+
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+}
+
+
+#stockCardContainer {
+  display: flex;
+  flex-direction: column;
+  width: 20%
+}
+
+.stockCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  text-align: center;
+  font-size: 18px;
+  width: 90%;
+  height: 12%;
+  margin: 1em;
+  border: 1px solid red;
+  background-color: teal;
+}
+
+.symbolContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  
+}
+span {
+  padding: 5px;
 }

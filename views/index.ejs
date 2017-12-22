@@ -10,12 +10,36 @@
     <script src="/socket.io/socket.io.js"></script>
   </head>
   <body>
-    <h1><%= title %></h1>
-    <canvas id="myChart" width="400" height="400"></canvas>
-    
-    <input type="text" id="input">
-    <button>Click Me</button>
-
+    <div class="title">
+      <h1>Stock Stalker Application</h1>
+      <p>Realtime Stock Analysis</p>
+    </div>
+    <div class="appContainer">
+      
+      <div class="mainContainer">
+        <div>
+          <div id="stockChart">
+            <canvas id="myChart" width="200" height="400"></canvas>
+          </div>
+          <div id="addStock">
+            <div id="inputContainer">
+              <h2> Add New Stock</h2>
+              <input type="text" name="addStock" placeholder="Enter Stock Code">
+              <button id="btn">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="stockCardContainer">
+        <% dbStocks.forEach((stock) => { %>
+          <div class="stockCard">
+            <div class="symbolContainer"><span><%=stock.symbol%></span><span>X</span></div>
+            <div class="companyName"><span><%=stock.name%></span></div>
+          </div>
+      
+      <% }) %>
+      </div>
+    </div>
   <script> 
     window.currentStocks = <%- JSON.stringify(currentStocks) %>;
       // var socket = io.connect();
