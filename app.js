@@ -31,10 +31,6 @@ io.on("connection", socket => {
     console.log("Client disconnected");
   });
 
-
-
-
-
   socket.on('addStock', (company) => {
 	fetchStocks(company).then((stockData) => {
 		Stock.findOne({symbol: company}, (err, stock) => {
@@ -55,6 +51,18 @@ io.on("connection", socket => {
 			}
 		})
 	})
+})
+
+socket.on('removeStock', (stock) => {
+  Stock.findOneAndRemove({symbol: stock}, (err, stockFound) => {
+    if(err) throw err;
+    if(!stockFound){
+      console.log(err)
+    } else {
+      console.log('removed Stock')
+      io.sockets.emit('stockRemoved', stockFound)
+    }
+  })
 })
 });
 

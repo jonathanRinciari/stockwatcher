@@ -31,18 +31,22 @@
         
       </div>
       <div id="stockCardContainer">
+  
         <% dbStocks.forEach((stock) => { %>
           <div class="stockCard">
-            <div class="symbolContainer"><span><%=stock.symbol%></span><span>X</span></div>
+            <div class="symbolContainer"><span><%=stock.symbol%></span><span class="delete" id=<%=stock.symbol%>>X</span></div>
             <div class="companyName"><span><%=stock.name%></span></div>
           </div>
       
       <% }) %>
+        
       </div>
     </div>
   <script> 
+   
     window.currentStocks = <%- JSON.stringify(currentStocks) %>;
       // var socket = io.connect();
+    
   </script>
 
 

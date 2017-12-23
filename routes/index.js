@@ -8,7 +8,8 @@ router.get("/", (req, res) => {
   var stocksArr = [];
   Stock.find({}, (err,stocks) => {
     res.locals.dbStocks = stocks;
-    if (stocks) {
+    
+    if (stocks.length > 0) {
       stocks.forEach((stock) => {
         stocksArr.push(stock.symbol);
       })
@@ -16,12 +17,11 @@ router.get("/", (req, res) => {
         var stockData = fetchStocks(stocksArr);
         Promise.all(stockData).then(data => {
           res.locals.currentStocks = data;
-          
-          console.log(res.locals.dbStocks)
           res.render("index", { title: "Help" });
         });
       }
     } else {
+      res.locals.currentStocks = false;
       res.render('index', {title: 'Helps'})
     }
   });

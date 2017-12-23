@@ -20,35 +20,55 @@ $(document).ready(function() {
 
   var socket = io.connect();
 
-$('button').click(function(){
-    var stockSymb = $('input').val();
-    if(stockSymb !== ''){
-    stockSymb = stockSymb.toUpperCase();
-    console.log(stockSymb)
-	socket.emit('addStock', stockSymb);
-    $('input').val('');
+  $("button").click(function() {
+    var stockSymb = $("input").val();
+    if (stockSymb !== "") {
+      stockSymb = stockSymb.toUpperCase();
+      socket.emit("addStock", stockSymb);
+      $("input").val("");
     }
-});
+  });
 
-socket.on('stockAdded', (stockData) => {
-	addStock(stockData);
-});
+  socket.on("stockAdded", stockData => {
+    addStock(stockData, {new:true});
+  });
 
-socket.on('stockRemoved', (tockData) => {
-	removeStock(stockData)
-});
+  socket.on("stockRemoved", stockData => {
+    removeStock(stockData);
+  });
 
-socket.on('invalidStock', (message) => {
-	alert(message)
-})
+  socket.on("invalidStock", message => {
+    alert(message);
+  });
 
 
-  function addStock(stock) {
+  function deleteHandler() {
+    $(".delete").click(function() {
+      socket.emit("removeStock", $(this).attr("id"));
+    });
+  }
+
+  function removeStock(stock){
+    console.log(stock.symbol)
+    var foundStock = ($('#' + stock.symbol).parents()[1])
+    foundStock.remove();
+
+    //Stock Chart is not updating after removal
+    stockChart.update();
+  }
+  deleteHandler();
+
+  function addStock(stock, newStock) {
     let xAxisArr = [];
     let yAxisArr = [];
-    stockName = stock[stock.length - 1]
-    console.log(stockName)
-    let stockCode = stockName.slice(stockName.lastIndexOf("(") + 1, stockName.lastIndexOf(")"));
+    let stockName = stock[stock.length - 1];
+    let stockCode = stockName.slice(
+      stockName.lastIndexOf("(") + 1,
+      stockName.lastIndexOf(")")
+    );
+    if(newStock){
+      addStockCard(stock)
+    }
     stock.pop(); //remove string at end of data
 
     stock.map(val => {
@@ -72,4 +92,17 @@ socket.on('invalidStock', (message) => {
     stockChart.data.datasets.push(newChart);
     stockChart.update();
   }
+
+  function addStockCard(stock){
+   var stockName = stock[stock.length - 1];
+
+   var stockCode = stockName.slice(stockName.lastIndexOf("(") + 1, stockName.lastIndexOf(")"));
+   $("#stockCardContainer").append(
+     `<div class="stockCard">
+            <div class="symbolContainer"><span>${stockCode}</span><span class="delete" id=${stockCode}>X</span></div>
+            <div class="companyName"><span>${stockName}</span></div>
+      </div>`);
+    deleteHandler()
+  }
+  
 });
