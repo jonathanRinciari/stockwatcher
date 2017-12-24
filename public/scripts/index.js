@@ -30,7 +30,7 @@ $(document).ready(function() {
   });
 
   socket.on("stockAdded", stockData => {
-    addStock(stockData, {new:true});
+    addStock(stockData, { new: true });
   });
 
   socket.on("stockRemoved", stockData => {
@@ -41,19 +41,24 @@ $(document).ready(function() {
     alert(message);
   });
 
-
   function deleteHandler() {
     $(".delete").click(function() {
       socket.emit("removeStock", $(this).attr("id"));
     });
   }
 
-  function removeStock(stock){
-    console.log(stock.symbol)
-    var foundStock = ($('#' + stock.symbol).parents()[1])
+  function removeStock(stock) {
+    console.log(stock.symbol, "test");
+    var foundStock = $("#" + stock.symbol).parents()[1];
     foundStock.remove();
 
     //Stock Chart is not updating after removal
+
+    stockChart.data.datasets.forEach((stocks, i) => {
+      if (stocks.label === stock.symbol) {
+        var a = stockChart.data.datasets.splice(i, i + 1);
+      }
+    });
     stockChart.update();
   }
   deleteHandler();
@@ -66,8 +71,8 @@ $(document).ready(function() {
       stockName.lastIndexOf("(") + 1,
       stockName.lastIndexOf(")")
     );
-    if(newStock){
-      addStockCard(stock)
+    if (newStock) {
+      addStockCard(stock);
     }
     stock.pop(); //remove string at end of data
 
@@ -93,16 +98,19 @@ $(document).ready(function() {
     stockChart.update();
   }
 
-  function addStockCard(stock){
-   var stockName = stock[stock.length - 1];
+  function addStockCard(stock) {
+    var stockName = stock[stock.length - 1];
 
-   var stockCode = stockName.slice(stockName.lastIndexOf("(") + 1, stockName.lastIndexOf(")"));
-   $("#stockCardContainer").append(
-     `<div class="stockCard">
+    var stockCode = stockName.slice(
+      stockName.lastIndexOf("(") + 1,
+      stockName.lastIndexOf(")")
+    );
+    $("#stockCardContainer").append(
+      `<div class="stockCard">
             <div class="symbolContainer"><span>${stockCode}</span><span class="delete" id=${stockCode}>X</span></div>
             <div class="companyName"><span>${stockName}</span></div>
-      </div>`);
-    deleteHandler()
+      </div>`
+    );
+    deleteHandler();
   }
-  
 });
