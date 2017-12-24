@@ -21,6 +21,14 @@ a {
 .title {
   text-align: center;
   margin-top: 30px;
+  color: white;
+}
+
+.title h1 {
+   color: black;
+   -webkit-text-fill-color: white; /* Will override color (regardless of order) */
+   -webkit-text-stroke-width: 1px;
+   -webkit-text-stroke-color: black;
 }
 
 .mainContainer {
@@ -61,8 +69,8 @@ a {
 }
 
 .stockCard:hover {
-  border-top: 1px solid purple;
-  border-left: 3px solid purple;
+  border-top: 1px solid #A020F0	;
+  border-left: 3px solid #A020F0	;
 }
 
 .delete {
@@ -96,10 +104,14 @@ span {
   border-radius: 20px;
   box-shadow: 1.5px 2px 1px;
   outline: none;
-  background-color: orange;
-  border: 1px solid gray;
+  background-color: #A020F0;
+  border: none;
+  transition: all .1s linear;
 }
 
+#btn:active {
+  box-shadow: none;
+}
 #btnContainer {
   width: 100%;
   display: flex;
@@ -120,7 +132,7 @@ input {
   display:block;
   width:100%;
   border:none;
-  border-bottom:1px solid #dedede;
+  border-bottom:1px solid #A020F0;
 }
 
 input:focus { outline:none; }
@@ -141,7 +153,8 @@ label {
 input:focus ~ label, input:valid ~ label {
   transform: translateY(-20px);
   font-size:14px;
-  color:#5264AE;
+  color:#A020F0;
+  
 }
 
 .bar:before, .bar:after {
@@ -157,9 +170,10 @@ input:focus ~ label, input:valid ~ label {
   left:50%;
 }
 .bar:after {
-  right:50%; 
+  right:50%;
 }
 
 input:focus ~ .bar:before, input:focus ~ .bar:after {
   width:50%;
+  
 }
