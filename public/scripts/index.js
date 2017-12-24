@@ -83,19 +83,28 @@ $(document).ready(function() {
     });
 
     stockChart.data.labels = xAxisArr.reverse();
+    var color = randomRGB();
     let newChart = {
       label: stockCode,
       data: yAxisArr,
       lineTension: 0.1,
       fill: false,
-      borderColor: "red",
-      borderCapStyle: "butt",
-      pointBackgroundColor: "red",
+      borderColor: color,
+      borderCapStyle: "round",
+      pointBackgroundColor: color,
       pointBorderColor: "black",
-      pointHoverRadius: 2
+      pointHoverRadius: 1
     };
     stockChart.data.datasets.push(newChart);
     stockChart.update();
+  }
+
+  function randomRGB() {
+    var r = Math.floor(Math.random() * 256); // Random between 0-255
+    var g = Math.floor(Math.random() * 256); // Random between 0-255
+    var b = Math.floor(Math.random() * 256); // Random between 0-255
+    var rgb = "rgb(" + r + "," + g + "," + b + ")"; // Collect all to a string
+    return rgb;
   }
 
   function addStockCard(stock) {
