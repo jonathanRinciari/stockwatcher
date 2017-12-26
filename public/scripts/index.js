@@ -20,6 +20,15 @@ $(document).ready(function() {
 
   var socket = io.connect();
 
+  $('input[type=text').keypress(function(e){
+    var key = e.which;
+    var stockSymb = $('input').val();
+    if(key == 13 && stockSymb !== ""){
+      stockSymb = stockSymb.toUpperCase();
+      socket.emit("addStock", stockSymb);
+      $("input").val("");
+    }
+  })
   $("button").click(function() {
     var stockSymb = $("input").val();
     if (stockSymb !== "") {
@@ -48,7 +57,6 @@ $(document).ready(function() {
   }
 
   function removeStock(stock) {
-    console.log(stock.symbol, "test");
     var foundStock = $("#" + stock.symbol).parents()[1];
     foundStock.remove();
 

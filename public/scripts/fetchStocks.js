@@ -12,14 +12,16 @@ module.exports = function fetchStocks(company) {
   }
 };
 
-function getStockData(company) {
+function getStockData(company, date) {
   var stockData = [];
+  if(!date){
+    date = '2017-06-01'
+  } else {
+
+  }
   return new Promise((resolve, reject) => {
     request(
-      "https://www.quandl.com/api/v3/datasets/WIKI/" +
-        company +
-        ".json?start_date=2017-01-01&api_key=" +
-        process.env.API_KEY,
+      `https://www.quandl.com/api/v3/datasets/WIKI/${company}.json?start_date=${date}&api_key=${process.env.API_KEY}`,
       (err, response, body) => {
         if (err) reject(err);
         let dataObj = JSON.parse(body);
