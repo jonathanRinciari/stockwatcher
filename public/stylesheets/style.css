@@ -177,3 +177,13 @@ input:focus ~ .bar:before, input:focus ~ .bar:after {
   width:50%;
   
 }
+
+@media only screen 
+  and (max-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+
+  .appContainer {
+    flex-direction: column;
+  }
+
+}
